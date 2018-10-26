@@ -6,6 +6,8 @@
 
 #define MAX_TAM_PALAVRA 100 // maximo tamanho real = 99 (reserva um para o \0)
 
+void strtoupper(char [*]); // nao passa o tamanho pq vai se basear no \0
+
 int main(void) {
     // Declaracao de uma variavel-string
     char string_1[] = { 'O', 'l', 'a', '\0' }; // nao se faz assim...
@@ -77,6 +79,17 @@ int main(void) {
     strcat(string_A, string_B);
     printf("string_A = %s, string_B = %s\n", string_A, string_B);
 
+    strtoupper(string_A);
+    printf("string_A em maiusculas = %s\n", string_A);
+
     return EXIT_SUCCESS;
+}
+
+void strtoupper(char string[]) {
+    int i = 0;
+    while (string[i] != '\0') {
+        string[i] = toupper(string[i]);
+        ++i;
+    }
 }
 
