@@ -22,6 +22,14 @@ int main(void) {
         return EXIT_FAILURE;
     }
 
+    // CRIA um novo arquivo com o conteudo selecionado do primeiro
+    FILE* stream2 = fopen("/tmp/nao-vogais.txt", "w"); // "w" cria/escreve
+    if (stream2 == 0) {
+        perror("Falha ao criar novo arquivo");
+        fclose(stream); // nao esquece o primeiro aberto
+        return EXIT_FAILURE;
+    }
+
     // Leitura e impressao do conteudo...
     puts(">>> Impressao propria do programa");
     // Enquanto nao alcanca o fim do arquivo/conteudo...
@@ -32,6 +40,7 @@ int main(void) {
                 perror("Erro na leitura do arquivo"); // imprime com causa
                 fclose(stream); // fecha o arquivo antes de abandonar a
                                 // leitura!
+                fclose(stream2); // nao deixa o arquivo de saida aberto!
                 return EXIT_FAILURE;
             }
         } else {
@@ -40,6 +49,14 @@ int main(void) {
             if (minusc != 'a' && minusc != 'e' && minusc != 'i' &&
                 minusc != 'o' && minusc != 'u' && minusc != 'y') {
                 putchar(byte); // imprime as nao-vogais
+
+                // Escreve esse tambem no arquivo de saida (nao-vogais.txt)
+                if (fputc(byte, stream2) == EOF) { // retornou com erro?
+                    perror("Erro na escrita do arquivo");
+                    fclose(stream2);
+                    fclose(stream);
+                    return EXIT_FAILURE;
+                }
             }
         }
     }
