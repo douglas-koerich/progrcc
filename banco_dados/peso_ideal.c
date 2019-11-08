@@ -10,6 +10,10 @@
 int main(int argc, char* argv[]) {
     struct person fulano; // eh necessario antepor 'struct' com o nome do tipo
 
+    struct person sicrano = { 0.0, '?', 0.0, -1.0, -1.0 }; 
+    struct person anonimo = {}; // tudo zerado
+    struct person vip = { .sexo = '?', .imc = 1.0 }; // outros campos zerados
+
     printf("Digite sua altura, em metros: ");
     scanf("%f", &fulano.altura); // nome-da-variavel.nome-do-campo
 

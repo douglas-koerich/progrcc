@@ -45,14 +45,7 @@ int main(int argc, char* argv[]) {
     }
 
     for (p = 0; p < num_pessoas; ++p) {
-        printf("%c %.2fm %.0fkg ", populacao[p].sexo, populacao[p].altura,
-               populacao[p].peso);
-        if (populacao[p].peso > populacao[p].peso_ideal) {
-            printf("NOK ");
-        } else {
-            printf("Ok! ");
-        }
-        putchar('\n');
+        imprime_dados(populacao[p]);
     }
 
     return EXIT_SUCCESS;
@@ -60,5 +53,30 @@ int main(int argc, char* argv[]) {
 
 float calcula_imc(float p, float h) {
     return p / (h * h);
+}
+
+void imprime_dados(struct person beltrano) {
+    printf("%c %.2fm %.0fkg ", beltrano.sexo, beltrano.altura,
+           beltrano.peso);
+    if (beltrano.peso > beltrano.peso_ideal) {
+        printf("NOK ");
+    } else {
+        printf("Ok! ");
+    }
+    if (beltrano.imc < 17.0) {
+        puts("Muito abaixo do peso ideal!");
+    } else if (beltrano.imc < 18.5) {
+        puts("Abaixo do peso ideal.");
+    } else if (beltrano.imc < 25) {
+        puts("Peso normal.");
+    } else if (beltrano.imc < 30) {
+        puts("Acima do peso.");
+    } else if (beltrano.imc < 35) {
+        puts("Obesidade.");
+    } else if (beltrano.imc < 40) {
+        puts("Obesidade severa!");
+    } else {
+        puts("Obesidade Morbida!!");
+    }
 }
 
