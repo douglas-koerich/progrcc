@@ -39,20 +39,20 @@ int main(int argc, char* argv[]) {
     for (a = 0; a < num_alunos; ++a) {
         turma[a].matricula = a + 101; // 101, 102, 103, ...
         fprintf(arqtexto, "%u,", turma[a].matricula); // (1)
-        fwrite(&turma[a].matricula, sizeof(unsigned), 1, arqbin); // (1)
+        //fwrite(&turma[a].matricula, sizeof(unsigned), 1, arqbin); // (1)
         printf("Nome? ");
         __fpurge(stdin);
         gets(turma[a].nome_completo);
         fprintf(arqtexto, "%s,", turma[a].nome_completo); // (1)
-        fwrite(&turma[a].nome_completo, sizeof(char), MAX_NOME, arqbin); // (1)
+        //fwrite(turma[a].nome_completo, sizeof(char), MAX_NOME, arqbin); // (1)
         printf("Data (d/m/a)? ");
         scanf("%u/%u/%u", &turma[a].data_nasc.dia, &turma[a].data_nasc.mes,
               &turma[a].data_nasc.ano);
         fprintf(arqtexto, "%02d/%02d/%02d,", turma[a].data_nasc.dia,
                 turma[a].data_nasc.mes, turma[a].data_nasc.ano); // (1)
-        fwrite(&turma[a].data_nasc.dia, sizeof(int), 1, arqbin); // (1)
-        fwrite(&turma[a].data_nasc.mes, sizeof(int), 1, arqbin); // (1)
-        fwrite(&turma[a].data_nasc.ano, sizeof(int), 1, arqbin); // (1)
+        //fwrite(&turma[a].data_nasc.dia, sizeof(int), 1, arqbin); // (1)
+        //fwrite(&turma[a].data_nasc.mes, sizeof(int), 1, arqbin); // (1)
+        //fwrite(&turma[a].data_nasc.ano, sizeof(int), 1, arqbin); // (1)
         int n;
         float soma;
         for (n = 0, soma = 0.0; n < NUM_NOTAS; ++n) {
@@ -61,15 +61,21 @@ int main(int argc, char* argv[]) {
             fprintf(arqtexto, "%.1f,", turma[a].notas[n]); // (1)
             soma += turma[a].notas[n];
         }
-        fwrite(&turma[a].notas, sizeof(float), NUM_NOTAS, arqbin); // (1)
+        //fwrite(turma[a].notas, sizeof(float), NUM_NOTAS, arqbin); // (1)
         turma[a].media = soma / 4;
         fprintf(arqtexto, "%.1f,", turma[a].media); // (1)
-        fwrite(&turma[a].media, sizeof(float), 1, arqbin); // (1)
+        //fwrite(&turma[a].media, sizeof(float), 1, arqbin); // (1)
         printf("Faltas? ");
         scanf("%u", &turma[a].faltas);
         fprintf(arqtexto, "%u\n", turma[a].faltas); // (1)
-        fwrite(&turma[a].faltas, sizeof(unsigned), 1, arqbin); // (1)
+        //fwrite(&turma[a].faltas, sizeof(unsigned), 1, arqbin); // (1)
+        
+        // Abordagem (2): salva o registro completo de uma soh vez
+        //fwrite(&turma[a], sizeof(struct aluno), 1, arqbin); // (2)
     }
+    // Abordagem (3): salva TODO o vetor de registros de uma soh vez
+    fwrite(turma, sizeof(struct aluno), num_alunos, arqbin); // (3)
+
     fclose(arqtexto);
     fclose(arqbin);
 
