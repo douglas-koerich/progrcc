@@ -11,5 +11,7 @@ struct paciente {
 };
 typedef struct paciente Paciente;
 
+float calcula_peso_ideal(char, float);
+
 #endif // EX5L7_H
 
