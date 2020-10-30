@@ -34,18 +34,12 @@ char calcula_verificador(const char numero_conta[]) {
                                    // ultimo caractere copiado da string original; eh necessario "marcar"
                                    // o fim da string invertida manualmente neste caso
 
-    printf("DEBUG: numero_conta = %s, num_conta_invertida = %s\n", numero_conta, num_conta_invertida);
-
     int num_conta, num_invertido;
     num_conta = atoi(numero_conta); // converte de string (supostamente numerica) para o inteiro correspondente
     num_invertido = atoi(num_conta_invertida);
 
-    printf("DEBUG: num_conta(i) = %d, num_invertido(i) = %d\n", num_conta, num_invertido);
-
     // Letra (a) do algoritmo
     int soma = num_conta + num_invertido;
-
-    printf("DEBUG: soma = %d\n", soma);
 
     // Letra (b)
     int num_algarismos = log10(soma) + 1; // v. exercicio da primeira lista da Disciplina
@@ -54,8 +48,6 @@ char calcula_verificador(const char numero_conta[]) {
         int menos_significativo = soma % 10;
         acumulado_multiplicacoes += menos_significativo * num_algarismos;
 
-        printf("DEBUG: multiplicando %d x %d\n", menos_significativo, num_algarismos);
-
         // Para o proximo passo elimina o menos significativo da vez, diminuindo tambem o numero de algarismos
         soma /= 10; // removeu o LSD
         --num_algarismos;
@@ -63,8 +55,6 @@ char calcula_verificador(const char numero_conta[]) {
 
     // Letra (c)
     char digito = (acumulado_multiplicacoes % 10) + '0'; // converte o digito inteiro em caractere
-
-    printf("DEBUG: Soma = %d; digito verificador calculado = %c\n", acumulado_multiplicacoes, digito);
 
     return digito;
 }
